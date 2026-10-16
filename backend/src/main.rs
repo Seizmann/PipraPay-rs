@@ -2,6 +2,7 @@
 mod auth;
 mod config;
 mod error;
+mod money;
 mod permissions;
 mod qr;
 mod routes;

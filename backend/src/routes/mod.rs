@@ -1,9 +1,17 @@
 pub mod auth;
+pub mod brands;
+pub mod customers;
+pub mod domains;
+pub mod gateways;
+pub mod settings;
 pub mod setup;
 pub mod staff;
 
-use axum::routing::{get, post, put};
-use axum::Router;
+use axum::{
+    middleware,
+    routing::{get, post, put},
+    Router,
+};
 
 pub fn api_router(state: crate::state::AppState) -> Router<crate::state::AppState> {
     let authed = Router::new()
@@ -18,7 +26,34 @@ pub fn api_router(state: crate::state::AppState) -> Router<crate::state::AppStat
             "/api/staff/{id}/permissions",
             get(staff::get_permissions).put(staff::set_permissions),
         )
-        .route_layer(axum::middleware::from_fn_with_state(
+        .route("/api/brands", get(brands::list).post(brands::create))
+        .route(
+            "/api/brands/{id}",
+            get(brands::get).put(brands::update).delete(brands::remove),
+        )
+        .route(
+            "/api/brands/{id}/gateways",
+            get(gateways::list).post(gateways::create),
+        )
+        .route(
+            "/api/gateways/{id}",
+            put(gateways::update).delete(gateways::remove),
+        )
+        .route(
+            "/api/brands/{id}/customers",
+            get(customers::list).post(customers::create),
+        )
+        .route(
+            "/api/customers/{ref}",
+            put(customers::update).delete(customers::remove),
+        )
+        .route("/api/domains", get(domains::list).post(domains::create))
+        .route(
+            "/api/domains/{id}",
+            put(domains::update).delete(domains::remove),
+        )
+        .route("/api/settings", get(settings::list).put(settings::update))
+        .route_layer(middleware::from_fn_with_state(
             state,
             crate::auth::require_auth,
         ));
