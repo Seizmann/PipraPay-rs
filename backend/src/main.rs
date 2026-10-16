@@ -1,7 +1,9 @@
 #![allow(dead_code)] // scaffolding: many pieces land in M2-M6
+mod auth;
 mod config;
 mod error;
 mod permissions;
+mod qr;
 mod routes;
 mod sms;
 mod state;
@@ -57,7 +59,10 @@ async fn main() -> anyhow::Result<()> {
     let spa = Router::new()
         .fallback_service(ServeDir::new(&dist_dir).fallback(ServeFile::new(index_html)));
 
-    let app = routes::api_router().with_state(app_state).merge(spa);
+    let app = routes::api_router(app_state.clone())
+        .with_state(app_state)
+        .layer(tower_cookies::CookieManagerLayer::new())
+        .merge(spa);
 
     let port: u16 = std::env::var("PORT")
         .ok()

@@ -11,7 +11,7 @@ rust_decimal = "1"
 serde = { version = "1", features = ["derive"] }
 serde_json = "1"
 bcrypt = "0.15"
-totp-rs = { version = "5", features = ["gen_secret"] }
+totp-rs = { version = "5", features = ["gen_secret", "otpauth"] }
 qrcode = "0.14"
 regex = "1"
 rand = "0.8"
@@ -19,10 +19,11 @@ chrono = { version = "0.4", features = ["serde"] }
 lettre = { version = "0.11", default-features = false, features = ["smtp-transport", "rustls-tls", "builder"] }
 reqwest = { version = "0.12", default-features = false, features = ["rustls-tls", "json"] }
 tower-http = { version = "0.6", features = ["fs", "trace"] }
-tower-cookies = "0.10"
+tower-cookies = "0.11"
 thiserror = "2"
 anyhow = "1"
 subtle = "2"
+sha2 = "0.10"
 base64 = "0.22"
 
 [dev-dependencies]
