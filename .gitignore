@@ -1,0 +1,7 @@
+target/
+node_modules/
+frontend/dist/
+SECRETS.md
+.env
+*.log
+.DS_Store
