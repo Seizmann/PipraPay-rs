@@ -1,0 +1,28 @@
+[package]
+name = "piprapay-rs"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+axum = "0.8"
+tokio = { version = "1", features = ["full"] }
+sqlx = { version = "0.8", default-features = false, features = ["runtime-tokio", "tls-rustls", "postgres", "json", "chrono", "rust_decimal", "migrate", "macros"] }
+rust_decimal = "1"
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+bcrypt = "0.15"
+totp-rs = { version = "5", features = ["gen_secret"] }
+qrcode = "0.14"
+regex = "1"
+rand = "0.8"
+chrono = { version = "0.4", features = ["serde"] }
+lettre = { version = "0.11", default-features = false, features = ["smtp-transport", "rustls-tls", "builder"] }
+reqwest = { version = "0.12", default-features = false, features = ["rustls-tls", "json"] }
+tower-http = { version = "0.6", features = ["fs", "trace"] }
+tower-cookies = "0.10"
+thiserror = "2"
+anyhow = "1"
+subtle = "2"
+base64 = "0.22"
+
+[dev-dependencies]
